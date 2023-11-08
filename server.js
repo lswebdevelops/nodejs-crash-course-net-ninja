@@ -1,7 +1,23 @@
 const http = require("http");
 const fs = require("fs");
+//  npm i --save lodash
+const _ = require('lodash')
+
 
 const server = http.createServer((req, res) => {
+
+    // loadash
+
+    // const num = _.random(0, 20);
+    // console.log(num);
+// just runs once
+    // const greet = _.once(() => {
+    //     console.log('hello');
+    // })
+
+    // greet()  // hello
+    // greet() // > here it is not loading
+  
   // set header content type
   res.setHeader("Content-Type", "text/html");
 
