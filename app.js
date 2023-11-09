@@ -1,5 +1,5 @@
 const express = require("express");
-
+const morgan = require('morgan')
 // express app
 
 const app = express();
@@ -11,6 +11,25 @@ app.set('view engine', 'ejs');
 
 // listen for requests
 app.listen(3000);
+// middleware
+// app.use((req, res, next) => {
+// console.log('new request made: ');
+// console.log('host: ', req.hostname);
+// console.log('path: ', req.path);
+// console.log('method: ', req.method);
+// next();// it hangs, if not added next()
+// });
+// // meddleware
+// app.use((req, res, next) => {
+// console.log('next middleware ');
+
+// next();// it hangs, if not added next()
+// });
+
+// middleware & static files 
+
+app.use(express.static('public'))// everything in the public forlder, will be avilable to frontend >> in the case the styles.css from head.ejs
+app.use(morgan('dev'));
 
 app.get("/", (req, res) => {
     //setting the root path
