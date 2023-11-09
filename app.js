@@ -13,8 +13,14 @@ app.set('view engine', 'ejs');
 app.listen(3000);
 
 app.get("/", (req, res) => {
-  //setting the root path
-  res.render('index', { title: 'Home'})
+    //setting the root path
+    const blogs = [
+        {title: 'Yoshi finds eggs', snippet: 'Lorem ipsum dolor sit amet consectetur'},
+        {title: 'Mario finds stars', snippet: 'Lorem ipsum dolor sit amet consectetur'},
+        {title: 'How do defeat bowser', snippet: 'Lorem ipsum dolor sit amet consectetur'},
+    ]
+//   res.render('index', { title: 'Home' , blogs:blogs}) or blogs
+  res.render('index', { title: 'Home' , blogs})
 });
 app.get("/about", (req, res) => {
   // res.send('<p>about page</p>');
