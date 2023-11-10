@@ -1,9 +1,0 @@
-[build]
-  command = "node server.js" 
-  functions = "functions"
-  publish = "public" # or the directory where your static files are
-
-[[redirects]]
-  from = "/*"
-  to = "/.netlify/functions/api"
-  status = 200
