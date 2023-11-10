@@ -7,14 +7,14 @@ const blogRoutes = require('./routes/blogRoutes')
 const app = express();
 
 //creating mongodb conection
-const dbURI =
-  "mongodb+srv://blog-ninja:wqrd25qMvhVuceT6@node-tuts.qo8q9kc.mongodb.net/node-tuts?retryWrites=true&w=majority";
-mongoose
-  .connect(dbURI)
-  // only listen to requests, after connection is successiful
-  .then((result) => app.listen(3000))
-  .catch((err) => console.log(err));
+const dbURI = process.env.MONGODB_URI ||  "mongodb+srv://blog-ninja:wqrd25qMvhVuceT6@node-tuts.qo8q9kc.mongodb.net/node-tuts?retryWrites=true&w=majority";
+// const dbURI = process.env.MONGODB_URI ||  "mongodb://blog-ninja:wqrd25qMvhVuceT6@node-tuts.qo8q9kc.mongodb.net/node-tuts?retryWrites=true&w=majority";
 
+mongoose
+  .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.log(err));
+  
 // register view engine
 app.set('view engine', 'ejs');
 

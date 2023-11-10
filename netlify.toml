@@ -1,0 +1,9 @@
+[build]
+  command = "npm run build" # or whatever command you use to build your app
+  functions = "functions"
+  publish = "public" # or the directory where your static files are
+
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/api"
+  status = 200
