@@ -19,71 +19,46 @@ mongoose
 // register view engine
 app.set("view engine", "ejs");
 
-app.use(express.static("public")); // everything in the public forlder, will be avilable to frontend >> in the case the styles.css from head.ejs
+app.use(express.static("public")); 
+app.use(express.urlencoded({extended: true })); // takes the url unlencoded data
 app.use(morgan("dev"));
 
-// mongoose and mongo sandbox routes:
-app.get("/add-blog", (req, res) => {
-  const blog = new Blog({
-    title: "new blog2",
-    snippet: "about my new blog",
-    body: "more about my new blog",
-  });
-  blog
-    .save()
-    .then((result) => {
-      res.send(result);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
-
-app.get("/all-blogs", (req, res) => {
-  Blog.find()
-    .then((result) => {
-      res.send(result);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
-
-app.get('/single-blog', (req, res) => {
-  Blog.findById('654d3904124d318ea780db5e')
-  .then((result) => {
-    res.send(result)
-  })
-  .catch((err) => {
-    console.log(err)
-  })
-})
 
 // routes
 
 app.get("/", (req, res) => {
-  //setting the root path
-  const blogs = [
-    {
-      title: "Yoshi finds eggs",
-      snippet: "Lorem ipsum dolor sit amet consectetur",
-    },
-    {
-      title: "Mario finds stars",
-      snippet: "Lorem ipsum dolor sit amet consectetur",
-    },
-    {
-      title: "How do defeat bowser",
-      snippet: "Lorem ipsum dolor sit amet consectetur",
-    },
-  ];
-  //   res.render('index', { title: 'Home' , blogs:blogs}) or blogs
-  res.render("index", { title: "Home", blogs });
+  res.redirect('/blogs')
 });
+
 app.get("/about", (req, res) => {
   // res.send('<p>about page</p>');
   res.render("about", { title: "About" });
 });
+
+// blog routes 
+
+app.get('/blogs', (req, res) => {
+  Blog.find().sort({ createdAt: -1 })// the newest goes to the top
+  .then((result) => {
+    res.render('index', {title: 'All Blogs', blogs: result})
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+})
+
+app.post('/blogs', (req, res) => {
+ const blog = new Blog(req.body)
+ blog.save()
+ .then((result) => {
+// after adding a new blog, redirects to the "/blogs' page
+  res.redirect('/blogs');
+ })
+ .catch((err) => {
+  console.log(err);
+ })
+})
+
 
 app.get("/blogs/create", (req, res) => {
   res.render("create", { title: "New Blog" });
