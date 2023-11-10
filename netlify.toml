@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build" # or whatever command you use to build your app
+  command = "node server.js" 
   functions = "functions"
   publish = "public" # or the directory where your static files are
 
